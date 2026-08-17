@@ -1,0 +1,248 @@
+/* ============================================================
+   Widget de Accesibilidad — Paleta Dorada
+   ============================================================ */
+
+/* Fuente OpenDyslexic (libre, sin servidor externo) */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/fonts/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ── Modos globales aplicados al <body> ─────────────────── */
+
+body.acc-grayscale {
+  filter: grayscale(1);
+}
+
+body.acc-contrast {
+  background: #000 !important;
+  color: #FFD700 !important;
+}
+body.acc-contrast a { color: #FFE97F !important; }
+body.acc-contrast img { filter: contrast(1.5) brightness(0.9); }
+
+body.acc-dyslexia,
+body.acc-dyslexia p,
+body.acc-dyslexia span,
+body.acc-dyslexia li,
+body.acc-dyslexia td,
+body.acc-dyslexia h1,
+body.acc-dyslexia h2,
+body.acc-dyslexia h3,
+body.acc-dyslexia h4 {
+  font-family: 'OpenDyslexic', sans-serif !important;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+  line-height: 1.8;
+}
+
+body.acc-underline p,
+body.acc-underline li,
+body.acc-underline td,
+body.acc-underline span {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ── Botón flotante ─────────────────────────────────────── */
+
+#acc-fab {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+
+  /* ============================================================
+     COLOR DEL BOTÓN FLOTANTE
+     Cambia estos valores para modificar el color de fondo
+     del botón circular que aparece en la esquina inferior.
+     ============================================================ */
+  background: linear-gradient(135deg, #8B6914, #C9960C);
+
+  border: 2px solid #E8B425;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(139, 105, 20, 0.45);
+  transition: background 0.2s, transform 0.15s;
+  padding: 0;
+  overflow: hidden; /* necesario si usas imagen en lugar de SVG */
+}
+#acc-fab:hover {
+  /* ============================================================
+     COLOR DEL BOTÓN AL PASAR EL MOUSE (hover)
+     ============================================================ */
+  background: linear-gradient(135deg, #C9960C, #E8B425);
+  transform: scale(1.07);
+}
+
+/* ── Imagen personalizada dentro del botón ──────────────────
+   Si decides reemplazar el ícono SVG por una imagen propia,
+   descomenta y ajusta estas reglas:
+
+#acc-fab img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+────────────────────────────────────────────────────────────── */
+
+/* ── Panel ──────────────────────────────────────────────── */
+
+#acc-panel {
+  position: fixed;
+  bottom: 90px;
+  left: 24px;
+  z-index: 9998;
+  width: 245px;
+  background: #fffdf5;
+  border: 1px solid #e8d5a0;
+  border-top: 3px solid #C9960C; /* línea dorada en la parte superior del panel */
+  border-radius: 14px;
+  padding: 14px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 8px 24px rgba(139, 105, 20, 0.18);
+  font-family: Arial, sans-serif;
+}
+#acc-panel.open { display: flex; }
+
+.acc-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  /* ============================================================
+     COLOR DEL TÍTULO DEL PANEL ("Accesibilidad")
+     ============================================================ */
+  color: #8B6914;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8d5a0;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.acc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  color: #3a2800;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  transition: background 0.15s;
+}
+.acc-item:hover { background: #fef3cc; }
+
+.acc-item.active {
+  /* ============================================================
+     COLOR DEL BOTÓN CUANDO ESTÁ ACTIVADO
+     ============================================================ */
+  background: #fff3cd;
+  color: #8B6914;
+  font-weight: 600;
+  border-left: 3px solid #C9960C;
+}
+
+.acc-item svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  /* ============================================================
+     COLOR DE LOS ÍCONOS SVG DE CADA BOTÓN
+     ============================================================ */
+  fill: #C9960C;
+}
+.acc-item.active svg { fill: #8B6914; }
+
+/* Controles de lector de voz */
+.acc-voice-controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+.acc-voice-btn {
+  flex: 1;
+  padding: 7px 4px;
+  border-radius: 8px;
+  border: 1px solid #e8d5a0;
+  background: transparent;
+  color: #3a2800;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background 0.15s;
+}
+.acc-voice-btn:hover { background: #fef3cc; }
+.acc-voice-btn.playing {
+  background: #fff3cd;
+  color: #8B6914;
+  border-color: #C9960C;
+}
+.acc-voice-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.acc-voice-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+.acc-font-row {
+  display: flex;
+  gap: 6px;
+}
+.acc-font-row button {
+  flex: 1;
+  padding: 7px;
+  border-radius: 8px;
+  border: 1px solid #e8d5a0;
+  background: transparent;
+  color: #3a2800;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  transition: background 0.15s;
+}
+.acc-font-row button:hover { background: #fef3cc; }
+
+.acc-reset {
+  margin-top: 6px;
+  padding: 9px;
+  border-radius: 8px;
+  /* ============================================================
+     COLOR DEL BOTÓN "RESTABLECER TODO"
+     ============================================================ */
+  background: linear-gradient(135deg, #8B6914, #C9960C);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+  width: 100%;
+  transition: background 0.2s;
+}
+.acc-reset:hover {
+  background: linear-gradient(135deg, #C9960C, #E8B425);
+  color: #2c1f05;
+}
+
+.acc-status {
+  font-size: 11px;
+  color: #a07820;
+  text-align: center;
+  min-height: 16px;
+}
